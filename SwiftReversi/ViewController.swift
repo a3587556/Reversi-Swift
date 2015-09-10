@@ -39,7 +39,21 @@ class ViewController: UIViewController, ReversiBoardDelegate {
     func boardStateChanged() {
         blackScore.text = "\(board.blackScore)"
         whiteScore.text = "\(board.whiteScore)"
-        restartButton.hidden = !board.gameHasFinished
+        //restartButton.hidden = !board.gameHasFinished
+        if board.gameHasFinished {
+            restartButton.hidden = false
+            if board.whiteScore > board.blackScore {
+                let alert = UIAlertController(title: "Congratulations!", message: "You are the Winner!", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                presentViewController(alert, animated: true, completion: nil)
+            } else if board.whiteScore < board.blackScore {
+                let alert = UIAlertController(title: "Oh, Sorry!", message: "You lost the game!", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                presentViewController(alert, animated: true, completion: nil)
+            }
+        }else {
+            restartButton.hidden = true
+        }
     }
     
     func restartTapped() {
